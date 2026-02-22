@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import accordionData from "./Data/Data";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [id, setid] = useState([]);
+
+  function func(index){
+
+
+    if(id.includes(index)){
+     const arr = id.filter((val) => {
+        return val!=index;
+      })
+
+      setid(arr);
+
+
+    }else{
+
+      setid([...id, index]);
+
+    }
+
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="main-div">
+        <div className="innerdiv">
+          {accordionData.map((val, index) => (
+            <div key={index}>
+              <div onClick={() => func(index)} className="accodio-heading">
+                {val.question}
+              </div>
+
+              {id.includes(index) && (
+                <div className="accordion-content">{val.answer}</div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
